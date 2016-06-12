@@ -19,10 +19,13 @@ def pca(dataMat, topNfeat = 9999999):
     meanRemoved = dataMat - meanVals
     #covariance matrix, x.T * x
     #If rowvar is True (default), then each row represents a variable, with observations in the columns
-    covMat = cov(meanRemoved, rowvar = False)
+    #covMat = cov(meanRemoved, rowvar = False)
     #Compute the eigenvalues and right eigenvectors of a square array.
-    eigVals,eigVects = linalg.eig(mat(covMat))
+    #eigVals,eigVects = linalg.eig(mat(covMat))
     #Returns the indices that would sort an array.
+    s,eigVals,d = linalg.svd(meanRemoved)
+    eigVects = d.T
+    
     eigValInd = argsort(eigVals)
     eigValInd = eigValInd[:-(topNfeat + 1):-1]
     redEigVects = eigVects[:,eigValInd]
